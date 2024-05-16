@@ -129,6 +129,11 @@ print("Asking user to select an output destination..")
 
 chosen_dir_path = filedialog.askdirectory(title = "Select the output destination")
 
+if not chosen_dir_path:
+    print("No output directory was selected.")
+    print(EXIT_PROMPT)
+    exit()
+
 try:
     Path(f"{chosen_dir_path}/tiirascraper").mkdir(parents=True, exist_ok=True)
     Path(f"{chosen_dir_path}/noformat").mkdir(parents=True, exist_ok=True)
