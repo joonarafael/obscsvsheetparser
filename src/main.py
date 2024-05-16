@@ -40,6 +40,21 @@ table = {
     31: [],
 }
 
+MONTHS = {
+    "TAMMIKUU": 1,
+    "HELMIKUU": 2,
+    "MAALISKUU": 3,
+    "HUHTIKUU": 4,
+    "TOUKOKUU": 5,
+    "KESÄKUU": 6,
+    "HEINÄKUU": 7,
+    "ELOKUU": 8,
+    "SYYSKUU": 9,
+    "LOKAKUU": 10,
+    "MARRASKUU": 11,
+    "JOULUKUU": 12,
+}
+
 EXIT_PROMPT = "Exiting program..."
 
 print("Asking user to select a CSV file..")
@@ -73,6 +88,15 @@ if (len(species_rows) < 3):
     print(EXIT_PROMPT)
     exit()
 
+month = "na"
+
+try:
+    month = MONTHS[species_rows[0][0]]
+except Exception as e:
+    print("Run into an exception while recognizing the month:")
+    print(e)
+    print("Month number will not be specified in file naming.")
+
 del species_rows[0]
 del species_rows[0]
 
@@ -99,7 +123,7 @@ print("Results are as follows:")
 
 for day in table:
     if (len(table[day]) != 0):
-        print(f"Day {day:02}: {len(table[day]):03} species")
+        print(f"{month:02}/{day:02}: {len(table[day]):03} species")
 
 print("Asking user to select an output destination..")
 
@@ -119,11 +143,11 @@ print("Starting to write the output files...")
 try:
     for day in table:
         if (len(table[day]) != 0):
-            with open(f"{chosen_dir_path}/tiirascraper/day_{day:02}.txt", "w+") as output_file:
+            with open(f"{chosen_dir_path}/tiirascraper/species_{month:02}_{day:02}.txt", "w+") as output_file:
                 for species in table[day]:
                     output_file.write(f"{species}\n")
 
-            with open(f"{chosen_dir_path}/noformat/day_{day:02}.txt", "w+") as output_file:
+            with open(f"{chosen_dir_path}/noformat/{month:02}-{day:02}.txt", "w+") as output_file:
                 one_string = ", ".join(table[day])
                 output_file.write(one_string)
 except Exception as e:
