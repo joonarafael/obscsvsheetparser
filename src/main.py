@@ -148,7 +148,7 @@ print("Starting to write the output files...")
 try:
     for day in table:
         if (len(table[day]) != 0):
-            with open(f"{chosen_dir_path}/tiirascraper/species_{month:02}_{day:02}.txt", "w+") as output_file:
+            with open(f"{chosen_dir_path}/tiirascraper/{month:02}-{day:02}.txt", "w+") as output_file:
                 for species in table[day]:
                     output_file.write(f"{species}\n")
 
